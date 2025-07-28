@@ -1,0 +1,84 @@
+{
+  "manifest_version": 3,
+  "name": "PassVault - Secure Password Manager",
+  "version": "1.0.0",
+  "description": "Zero-knowledge password manager with enterprise-grade security",
+  "author": "PassVault Team",
+  
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "PassVault",
+    "default_icon": {
+      "16": "icon16.png",
+      "32": "icon32.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  
+  "permissions": [
+    "storage",
+    "activeTab", 
+    "scripting",
+    "notifications"
+  ],
+  
+  "host_permissions": [
+    "https://*.passvault.com/*",
+    "http://localhost:5000/*"
+  ],
+  
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  
+  "web_accessible_resources": [],
+  
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'; base-uri 'none'; require-trusted-types-for 'script';"
+  },
+  
+  "externally_connectable": {
+    "matches": [
+      "https://*.passvault.com/*"
+    ]
+  },
+  
+  "minimum_chrome_version": "102",
+  
+  "options_page": "options.html",
+  
+  "commands": {
+    "toggle-vault": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+P",
+        "mac": "Command+Shift+P"
+      },
+      "description": "Toggle PassVault popup"
+    },
+    "auto-fill": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L",
+        "mac": "Command+Shift+L"
+      },
+      "description": "Auto-fill credentials"
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "manifest_version": 3,
+  "name": "PassVault - Secure Password Manager",
+  "version": "1.0.0",
+  "description": "Zero-knowledge password manager with enterprise-grade security",
+  
+  "action": {
+    "default_popup": "src/popup.html",
+    "default_title": "PassVault"
+  },
+  
+  "background": {
+    "service_worker": "src/background/index.js",
+    "type": "module"
+  },
+  
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/content/index.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "notifications"
+  ],
+  
+  "host_permissions": [
+    "https://*.passvault.com/*",
+    "http://localhost:5000/*"
+  ],
+  
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  
+  "minimum_chrome_version": "102",
+  
+  "commands": {
+    "toggle-vault": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+P",
+        "mac": "Command+Shift+P"
+      },
+      "description": "Toggle PassVault popup"
+    },
+    "auto-fill": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L",
+        "mac": "Command+Shift+L"
+      },
+      "description": "Auto-fill credentials"
+    }
+  }
+}
